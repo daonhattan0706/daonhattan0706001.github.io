@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Table</title>
+
+
+
+</head>
+
+<body>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        select {
+            float: left;
+        }
+        
+        img {
+            float: left;
+        }
+        
+        #imgSelect {
+            width: 400px;
+            height: 400px;
+        }
+    </style>
+
+
+    <select id="imageList" name="imageList" size="10" onclick='clickImg()'>
+    <option value="pic_001.jpg">pic_001.jpg</option>
+    <option value="pic_002.jpg">pic_002.jpg</option>
+    <option value="pic_003.jpg">pic_003.jpg</option>
+    <option value="pic_004.jpg">pic_004.jpg</option>
+    <option value="pic_005.jpg">pic_005.jpg</option>
+    <option value="pic_006.jpg">pic_006.jpg</option>
+    <option value="pic_007.jpg">pic_007.jpg</option>
+    <option value="pic_008.jpg">pic_008.jpg</option>
+    <option value="pic_009.jpg">pic_009.jpg</option>
+    <option value="pic_010.jpg">pic_010.jpg</option>
+</select>
+    <img id='imgSelect' src="img/pic_001.jpg">
+    <button type="button" id='backImg' onclick="backButton()">Back</button>
+    <button type="button" id='startImg' onclick="startButton()">Start slideshow</button>
+    <button type="button" id='nextImg' onclick="nextButton()">Next</button>
+    <p id='imgName'>pic_001.jpg(1/10)</p>
+
+
+
+
+    <script>
+        let flag = 1;
+        let Interval = null;
+        var imgIndex = 0;
+        let imgClick = document.getElementById('imageList');
+        let size = imgClick.options.length;
+
+        function clickImg() {
+            let index = imgClick.selectedIndex + 1;
+            imgIndex = index - 1;
+            displayImg(imgIndex);
+
+        }
+
+        function backButton() {
+            imgIndex--;
+            if (imgIndex === -1) {
+                imgIndex = size - 1;
+            }
+            let imgSet = imgClick.options[imgIndex].value;
+            displayImg(imgIndex);
+        }
+
+        function nextButton() {
+            imgIndex++;
+            if (imgIndex === size) {
+                imgIndex = 0
+            }
+            let imgSet = imgClick.options[imgIndex].value;
+            displayImg(imgIndex);
+        }
+
+        function displayImg(index) {
+            let imgChange = document.getElementById('imgSelect');
+            let imgNameChange = imgClick.options[index].value;
+            let a = index + 1;
+
+            let src = "img/" + imgNameChange;
+            imgSelect.setAttribute('src', src);
+            let name = imgNameChange + '(' + a + '/' + size + ')';
+            imgName.innerHTML = name;
+            imageList.selectedIndex = index;
+
+        }
+
+        function startButton() {
+            if (flag === 1) {
+                Interval = setInterval(nextButton, 1000);
+                document.getElementById('startImg').innerHTML = 'Stop slideshow';
+                flag = 0;
+            } else {
+                clearInterval(Interval);
+                document.getElementById('startImg').innerHTML = 'Start slideshow';
+                flag = 1;
+            }
+
+
+        }
+    </script>
+</body>
+
+</html>
